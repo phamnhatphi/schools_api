@@ -61,13 +61,4 @@ class User extends Authenticatable
             ->first();
     }
 
-    public function isTeacher($query, $userId)
-    {
-        return $query->where('role_id', 1)->get();
-    }
-
-    public function isStudent($query, $userId)
-    {
-        return $query->where('role_id', 2)->get();
-    }
 }

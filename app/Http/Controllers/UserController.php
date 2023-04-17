@@ -3,18 +3,29 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Services\ClassService;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+
+    public $class_service;
+
+    public function __construct(ClassService $class_service)
+    {
+        $this->class_service = $class_service;
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $user = $request->user();
+        $is_teacher = $user->role_id === config('user.account_type_id.teacher');
+        if ($is_teacher) {
+        }
     }
 
     /**
@@ -83,14 +94,15 @@ class UserController extends Controller
         //
     }
 
-   /**
-    * get user information of the currently logged.
-    * 
-    * @param Request $request
-    * 
-    * @return \Illuminate\Http\Response
-    */
-    public function infoUserLogged(Request $request) {
+    /**
+     * get user information of the currently logged.
+     * 
+     * @param Request $request
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function infoUserLogged(Request $request)
+    {
         return response()->json([
             'data' => User::getUserById($request->user()->id)
         ]);

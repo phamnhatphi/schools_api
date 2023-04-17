@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ClassController;
 use App\Http\Controllers\UserController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,10 +17,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::controller(AuthController::class)->group(function () {
-    Route::post('/register', 'register');
-    Route::post('/login', 'login');
+    Route::post('/register', 'register')->name('register');
+    Route::post('/login', 'login')->name('login');
+    Route::get('/logout', 'logout')->middleware('auth:sanctum')->name('logout');
 });
 
-Route::middleware('auth:sanctum')->group( function() {
+Route::middleware('auth:sanctum')->group(function() {
     Route::get('/me', [UserController::class, 'infoUserLogged']);
+    Route::controller(ClassController::class)->prefix('class')->group(function() {
+        Route::get('/list', 'index')->name('class-list');
+        Route::get('/{id}', 'show')->name('class-detail');
+        Route::put('/{id}', 'update')->name('class-update');
+        Route::delete('/{id}', 'destroy')->name('class-destroy');
+    });
 });

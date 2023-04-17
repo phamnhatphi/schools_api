@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
-    
+
     /**
      * The function registers a new user, validates the input, creates a token for the user, and
      * returns a JSON response with the access token and token type.
@@ -19,7 +19,8 @@ class AuthController extends Controller
      * 
      * @return JSON response with an access token and token type.
      */
-    public function register(Request $request) {
+    public function register(Request $request)
+    {
         $validated = $request->validate([
             'username' => 'required|max:255',
             'role_id' => 'required|alpha_num',
@@ -54,7 +55,8 @@ class AuthController extends Controller
      * @return JSON response with a message indicating
      * invalid credentials and a 401 status code is returned.
      */
-    public function login(Request $request) {
+    public function login(Request $request)
+    {
         $credentials = $request->validate([
             'username' => 'required',
             'password' => 'required',
@@ -69,5 +71,17 @@ class AuthController extends Controller
             ]);
         }
         return response()->json(['message' => 'Invalid login credentials'], 401);
+    }
+
+    /**
+     * The function logs out the authenticated user by deleting their access tokens.
+     * 
+     * @return JSON
+     */
+    public function logout()
+    {
+        Auth::user()->tokens()->delete();
+
+        return response()->json(['message' => 'Successfully logged out']);
     }
 }
