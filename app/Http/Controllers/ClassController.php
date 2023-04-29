@@ -25,7 +25,7 @@ class ClassController extends Controller
     public function index(Request $request)
     {
         $params = $request->all();
-        $classes = $this->class_service->getListClass($params);
+        $classes = $this->class_service->getListClass($params, $request->user()->id);
         return response()->json(['data' => $classes]);
     }
 

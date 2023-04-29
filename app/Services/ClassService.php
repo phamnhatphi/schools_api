@@ -8,12 +8,13 @@ use Arr;
 class ClassService
 {
 
-    public function getListClass($params)
+    public function getListClass($params, User $id)
     {
         $limit = Arr::get($params, 'limit', config('pagination.limit'));
         $sort = Arr::get($params, 'sort', config('pagination.sort'));
         $order = Arr::get($params, 'order', config('pagination.order'));
         return User::join('class', 'users.id', 'class.user_id')
+            ->where('users.id', $id)
             ->orderBy($sort, $order)
             ->paginate($limit);
     }
