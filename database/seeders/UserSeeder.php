@@ -16,16 +16,17 @@ class UserSeeder extends Seeder
     public function run()
     {
         DB::table('users')->truncate();
+        DB::table('user_info')->truncate();
         
-        for ($i=0; $i <10 ; $i++) {
+        for ($i=0; $i < 10 ; $i++) {
             $faker = Faker::create();
             DB::table('users')->insert([
                 'role_id' => ($i === 0) ? config('user.account_type_id.teacher') : config('user.account_type_id.student'),
-                'username' => ($i === 0) ? "admin" : "student{$i}",
-                'password' => ($i === 0) ? \Hash::make('admin') : \Hash::make("student{$i}"),
+                'username' => ($i === 0) ? "teacher" : "student{$i}",
+                'password' => ($i === 0) ? \Hash::make('teacher') : \Hash::make("student{$i}"),
             ]);
             DB::table('user_info')->insert([
-                'user_id' => 1,
+                'user_id' => $i+1,
                 'fullname' => $faker->userName(),
                 'phone_number' => $faker->phoneNumber(),
                 'email' => $faker->email(),

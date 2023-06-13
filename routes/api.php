@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClassController;
+use App\Http\Controllers\GroupController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,5 +30,9 @@ Route::middleware('auth:sanctum')->group(function() {
         Route::get('/{id}', 'show')->name('class-detail');
         Route::put('/{id}', 'update')->name('class-update');
         Route::delete('/{id}', 'destroy')->name('class-destroy');
+    });
+    Route::controller(GroupController::class)->prefix('teachers')->group(function() {
+        Route::get('/groups', 'index')->name('group-list');
+        Route::get('/groups/{id}', 'show')->name('group-detail');
     });
 });
