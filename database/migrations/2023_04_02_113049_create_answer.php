@@ -18,6 +18,9 @@ class CreateAnswer extends Migration
             $table->integer('assignment_id');
             $table->integer('student_id');
             $table->tinyInteger('is_submit');
+            $table->text('content');
+            $table->string('timeline');
+            $table->text('review');
             $table->date('submit_at');
             $table->float('score', 2, 2);
             $table->timestamps();
@@ -31,6 +34,6 @@ class CreateAnswer extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_answer');
+        Schema::dropIfExists('answer');
     }
 }

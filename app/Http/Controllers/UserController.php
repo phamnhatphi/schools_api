@@ -4,15 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Services\ClassService;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
 
+    /**
+     * @var \App\Services\ClassService $class_service
+     */
     public $class_service;
+    /**
+     * @var \App\Services\UserService $service
+     */
+    public $service;
 
-    public function __construct(ClassService $class_service)
+    public function __construct(UserService $service, ClassService $class_service)
     {
+        $this->service = $service;
         $this->class_service = $class_service;
     }
     /**
@@ -29,82 +38,17 @@ class UserController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function show(User $user)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(User $user)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, User $user)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(User $user)
-    {
-        //
-    }
-
-    /**
      * get user information of the currently logged.
      * 
      * @param Request $request
      * 
      * @return \Illuminate\Http\Response
      */
-    public function infoUserLogged(Request $request)
+    public function getMe(Request $request)
     {
+        $info = $this->service->getMe($request->user()->id);
         return response()->json([
-            'data' => User::getUserById($request->user()->id)
+            'data' => $info
         ]);
     }
 }

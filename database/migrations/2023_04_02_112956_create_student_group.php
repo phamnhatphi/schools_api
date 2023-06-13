@@ -28,6 +28,6 @@ class CreateStudentGroup extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_student_group');
+        Schema::dropIfExists('student_group');
     }
 }

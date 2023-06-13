@@ -15,13 +15,14 @@ class CreateQuestion extends Migration
     {
         Schema::create('question', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
+            $table->string('description');
             $table->integer('user_id');
             $table->integer('subject_id');
-            $table->tinyInteger('is_submit');
             $table->tinyInteger('is_public');
             $table->text('content');
             $table->string('timeline');
+            $table->string('answer');
+            $table->string('has_answer');
             $table->timestamps();
         });
     }
@@ -33,6 +34,6 @@ class CreateQuestion extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_question');
+        Schema::dropIfExists('question');
     }
 }

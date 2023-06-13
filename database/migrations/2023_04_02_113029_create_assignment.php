@@ -17,9 +17,10 @@ class CreateAssignment extends Migration
             $table->id();
             $table->integer('group_id');
             $table->string('title');
+            $table->string('subtitle');
             $table->integer('question_id');
             $table->tinyInteger('assignment_type_id');
-            $table->string('status');
+            // $table->string('status');
             $table->date('time_start');
             $table->date('time_end');
             $table->timestamps();
@@ -33,6 +34,6 @@ class CreateAssignment extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_assignment');
+        Schema::dropIfExists('assignment');
     }
 }

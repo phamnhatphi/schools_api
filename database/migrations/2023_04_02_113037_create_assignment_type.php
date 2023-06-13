@@ -27,6 +27,6 @@ class CreateAssignmentType extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_assignment_type');
+        Schema::dropIfExists('assignment_type');
     }
 }

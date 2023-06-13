@@ -15,7 +15,7 @@ class CreateRole extends Migration
     {
         Schema::create('role', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('role_name');
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ class CreateRole extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_role');
+        Schema::dropIfExists('role');
     }
 }

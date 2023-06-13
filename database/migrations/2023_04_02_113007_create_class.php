@@ -28,6 +28,6 @@ class CreateClass extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_class');
+        Schema::dropIfExists('class');
     }
 }

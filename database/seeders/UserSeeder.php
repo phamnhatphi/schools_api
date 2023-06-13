@@ -15,22 +15,25 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        $faker = Faker::create();
-        DB::table('users')->insert([
-            'account_id' => 1,
-            'role_id' => 1,
-            'username' => 'admin',
-            'password' => \Hash::make('admin'),
-        ]);
-        DB::table('user_info')->insert([
-            'user_id' => 1,
-            'fullname' => $faker->userName(),
-            'phone_number' => $faker->phoneNumber(),
-            'email' => $faker->email(),
-            'date_of_birth' => $faker->date(),
-            'gender' => 1,
-            'address' => $faker->address(),
-            'description' => '',
-        ]);
+        DB::table('users')->truncate();
+        
+        for ($i=0; $i <10 ; $i++) {
+            $faker = Faker::create();
+            DB::table('users')->insert([
+                'role_id' => ($i === 0) ? config('user.account_type_id.teacher') : config('user.account_type_id.student'),
+                'username' => ($i === 0) ? "admin" : "student{$i}",
+                'password' => ($i === 0) ? \Hash::make('admin') : \Hash::make("student{$i}"),
+            ]);
+            DB::table('user_info')->insert([
+                'user_id' => 1,
+                'fullname' => $faker->userName(),
+                'phone_number' => $faker->phoneNumber(),
+                'email' => $faker->email(),
+                'date_of_birth' => $faker->date(),
+                'gender' => array_rand(array_values(config('user.gender'))),
+                'address' => $faker->address(),
+                'description' => '',
+            ]);
+        }
     }
 }

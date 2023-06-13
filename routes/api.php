@@ -23,7 +23,7 @@ Route::controller(AuthController::class)->group(function () {
 });
 
 Route::middleware('auth:sanctum')->group(function() {
-    Route::get('/me', [UserController::class, 'infoUserLogged']);
+    Route::get('/me', [UserController::class, 'getMe'])->name('get-me');
     Route::controller(ClassController::class)->prefix('class')->group(function() {
         Route::get('/list', 'index')->name('class-list');
         Route::get('/{id}', 'show')->name('class-detail');

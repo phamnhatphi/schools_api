@@ -2,7 +2,11 @@
 
 return [
     'account_type_id' => [
-        'teacher' => 1,
-        'student' => 0,
+        'student' => 1,
+        'teacher' => 2,
+    ],
+    'gender' => [
+        'male' => 1,
+        'female' => 2,
     ],
 ];

@@ -12,6 +12,8 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    public $timestamps = true;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -42,23 +44,4 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-    /**
-     * This is a PHP function that retrieves a user by their ID.
-     * 
-     * @param query The query parameter is an instance of the Eloquent query builder, which allows you
-     * to build and execute database queries in your Laravel application.
-     * @param userId The parameter `` is a variable that represents the ID of a user. It is used
-     * in the `scopeGetUserById` function to retrieve a user from the database based on their ID.
-     * 
-     * @return The function `scopeGetUserById` is returning a query result for the user with the
-     * specified ``. The `first()` method is used to retrieve the first result of the query.
-     */
-    public function scopeGetUserById($query, $userId)
-    {
-        return $query->join('user_info', 'users.id', 'user_info.user_id')
-            ->where('users.id', $userId)
-            ->first();
-    }
-
 }
