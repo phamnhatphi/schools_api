@@ -34,5 +34,6 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::controller(GroupController::class)->prefix('teachers')->group(function() {
         Route::get('/groups', 'index')->name('group-list');
         Route::get('/groups/{id}', 'show')->name('group-detail');
+        Route::get('/groups/{id}/assignments', 'getAssignments')->name('group-assignment');
     });
 });

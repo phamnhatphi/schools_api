@@ -41,4 +41,12 @@ class GroupController extends Controller
         $info = $this->service->getGroupDetailById($id);
         return response()->json(['data' => $info]) ;
     }
+
+    public function getAssignments($id)
+    {
+        $assignments['not_start'] = $this->service->getAssignmentsNotStart($id);
+        $assignments['started'] = $this->service->getAssignmentsStarted($id);
+        $assignments['ended'] = $this->service->getAssignmentsEnded($id);
+        return response()->json(['data' => $assignments]);
+    }
 }
