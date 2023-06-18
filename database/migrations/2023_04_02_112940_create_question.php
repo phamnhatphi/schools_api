@@ -22,7 +22,7 @@ class CreateQuestion extends Migration
             $table->text('content');
             $table->string('timeline');
             $table->string('answer');
-            $table->string('has_answer');
+            $table->tinyInteger('has_answer');
             $table->timestamps();
         });
     }

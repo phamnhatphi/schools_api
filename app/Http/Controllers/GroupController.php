@@ -49,4 +49,45 @@ class GroupController extends Controller
         $assignments['ended'] = $this->service->getAssignmentsEnded($id);
         return response()->json(['data' => $assignments]);
     }
+
+    public function storeAssignmentGroupId(Request $request, $id)
+    {
+        $data = $request->all();
+        $results = $this->service->storeAssignmentGroupId($data, $id);
+        if (!$results) {
+            return response()->json([
+                'message' => 'something went wrong'
+            ], 500);
+        }
+        return response()->json([
+            'message' => 'Successfully'
+        ], 200);
+    }
+
+    public function updateAssignmentGroupId(Request $request, $id, $assignment_id)
+    {
+        $data = $request->all();
+        $results = $this->service->updateAssignmentGroupId($data, $id, $assignment_id);
+        if (!$results) {
+            return response()->json([
+                'message' => 'something went wrong'
+            ], 500);
+        }
+        return response()->json([
+            'message' => 'Successfully'
+        ], 200);
+    }
+
+    public function deleteAssignmentGroupId($id, $assignment_id)
+    {
+       $results = $this->service->deleteAssignmentGroupId($assignment_id);
+       if (!$results) {
+            return response()->json([
+                'message' => 'something went wrong'
+            ], 500);
+        }
+        return response()->json([
+            'message' => 'Successfully'
+        ], 200);
+    }
 }

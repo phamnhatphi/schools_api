@@ -2,7 +2,9 @@
 
 namespace App\Services;
 
+use App\Models\Assignment;
 use App\Models\Group;
+use App\Models\Question;
 use Arr;
 use Carbon\Carbon;
 
@@ -57,5 +59,56 @@ class GroupService
         $to_day = Carbon::now();
         $query = $this->queryAssignmentList($id);
         return $query->whereDate('time_start', '>', $to_day)->get()->toArray();
+    }
+
+    public function storeAssignmentGroupId($data, $id)
+    {
+        $assignment = [
+            'assignment_type_id' => Arr::get($data, 'assignment_type_id'),
+            'group_id' => $id,
+            'title' => Arr::get($data, 'title'),
+            'subtitle' => Arr::get($data, 'subtitle'),
+            'time_start' => Arr::get($data, 'time_start'),
+            'time_end' => Arr::get($data, 'time_end'),
+            'question_id' => Arr::get($data, 'question_id'),
+        ];
+        return Assignment::insert($assignment);
+    }
+
+    public function updateAssignmentGroupId($data, $id, $assignment_id)
+    {
+        try {
+            \DB::beginTransaction();
+            $question_id = Arr::get($data, 'question_id');
+            $question = [
+                'user_id' => Arr::get($data, 'question_teacher_id'),
+                'timeline' => Arr::get($data, 'timeline'),
+                'answer' => Arr::get($data, 'question_answer'),
+                'content' => Arr::get($data, 'question_content'),
+                'has_answer' => Arr::get($data, 'question_has_answer'),
+            ];
+            Question::where('id', $question_id)->update($question);
+
+            $assignment = [
+                'assignment_type_id' => Arr::get($data, 'assignment_type_id'),
+                'group_id' => $id,
+                'title' => Arr::get($data, 'title'),
+                'subtitle' => Arr::get($data, 'subtitle'),
+                'time_start' => Arr::get($data, 'time_start'),
+                'time_end' => Arr::get($data, 'time_end'),
+                'question_id' => $question_id,
+            ];
+            Assignment::where('id', $assignment_id)->update($assignment);
+            \DB::commit();
+            return true;
+        } catch (\Throwable $th) {
+            \Log::debug($th);
+            \DB::rollBack();
+            return false;
+        }
+    }
+    
+    public function deleteAssignmentGroupId($assignment_id) {
+        return Assignment::where('id', $assignment_id)->delete($assignment_id);
     }
 }
