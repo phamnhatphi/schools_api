@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClassController;
 use App\Http\Controllers\GroupController;
+use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -38,5 +39,9 @@ Route::middleware('auth:sanctum')->group(function() {
         Route::post('/groups/{id}/assignments', 'storeAssignmentGroupId')->name('group-assignment-store');
         Route::put('/groups/{id}/assignments/{assignment_id}', 'updateAssignmentGroupId')->name('group-assignment-update');
         Route::delete('/groups/{id}/assignments/{assignment_id}', 'deleteAssignmentGroupId')->name('group-assignment-delete');
+    });
+    Route::controller(QuestionController::class)->prefix('teachers')->group(function() {
+        Route::post('/questions', 'store')->name('questions-store');
+        Route::get('/library', 'libraryList')->name('library-list');
     });
 });
