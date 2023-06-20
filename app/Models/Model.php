@@ -2,12 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+// use SerializeDateTrait;
 use Illuminate\Database\Eloquent\Model as BaseModel;
-use SerializeDateTrait;
 
 class Model extends BaseModel
 {
-	use HasFactory;
-	use SerializeDateTrait;
+	// use SerializeDateTrait;
 }

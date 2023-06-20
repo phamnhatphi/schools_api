@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClassController;
 use App\Http\Controllers\GroupController;
@@ -39,9 +40,17 @@ Route::middleware('auth:sanctum')->group(function() {
         Route::post('/groups/{id}/assignments', 'storeAssignmentGroupId')->name('group-assignment-store');
         Route::put('/groups/{id}/assignments/{assignment_id}', 'updateAssignmentGroupId')->name('group-assignment-update');
         Route::delete('/groups/{id}/assignments/{assignment_id}', 'deleteAssignmentGroupId')->name('group-assignment-delete');
+        Route::delete('/groups/{id}/assignments/{assignment_id}', 'deleteAssignmentGroupId')->name('group-assignment-delete');
     });
     Route::controller(QuestionController::class)->prefix('teachers')->group(function() {
         Route::post('/questions', 'store')->name('questions-store');
         Route::get('/library', 'libraryList')->name('library-list');
+        Route::get('/my-questions', 'questionList')->name('my-questions-list');
+        Route::get('/questions/{id}', 'show')->name('my-questions-show');
+        Route::get('/questions/{id}', 'show')->name('my-questions-show');
+        
+    });
+    Route::controller(AnswerController::class)->prefix('teachers')->group(function() {
+        Route::get('/groups/{group_id}/assignments/{assignment_id}/answers', 'answerList')->name('answer-list');
     });
 });

@@ -38,4 +38,21 @@ class QuestionController extends Controller
             'data' => $library_list
         ], 200);
     }
+
+    public function questionList(Request $request)
+    {
+        $params = $request->all();
+        $question_list = $this->service->QuestionList($params, $request->user()->id);
+        return response()->json([
+            'data' => $question_list
+        ], 200);
+    }
+
+    public function show(Request $request, $id)
+    {
+        $question_list = $this->service->QuestionDetail($id, $request->user()->id);
+        return response()->json([
+            'data' => $question_list
+        ], 200);
+    }
 }

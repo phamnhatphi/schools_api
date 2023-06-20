@@ -22,7 +22,7 @@ class CreateAnswer extends Migration
             $table->string('timeline');
             $table->text('review');
             $table->date('submit_at');
-            $table->float('score', 2, 2);
+            $table->float('score', 4, 2);
             $table->timestamps();
         });
     }
