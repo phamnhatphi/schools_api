@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-// use SerializeDateTrait;
+use App\Models\Traits\DateTimeTrait;
 use Illuminate\Database\Eloquent\Model as BaseModel;
 
 class Model extends BaseModel
 {
-	// use SerializeDateTrait;
+    use DateTimeTrait;
 }
