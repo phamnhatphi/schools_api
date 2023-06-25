@@ -36,6 +36,8 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::controller(GroupController::class)->prefix('teachers')->group(function() {
         Route::get('/groups', 'index')->name('group-list');
         Route::get('/groups/{id}', 'show')->name('group-detail');
+        Route::get('/groups/{id}/students', 'listStudentInGroup')->name('group-students');
+        Route::get('/groups/{id}/score', 'listScoreStudentInGroup')->name('group-score-students');
         Route::get('/groups/{id}/assignments', 'getAssignments')->name('group-assignment');
         Route::post('/groups/{id}/assignments', 'storeAssignmentGroupId')->name('group-assignment-store');
         Route::put('/groups/{id}/assignments/{assignment_id}', 'updateAssignmentGroupId')->name('group-assignment-update');
@@ -52,5 +54,7 @@ Route::middleware('auth:sanctum')->group(function() {
     });
     Route::controller(AnswerController::class)->prefix('teachers')->group(function() {
         Route::get('/groups/{group_id}/assignments/{assignment_id}/answers', 'answerList')->name('answer-list');
+        Route::get('/groups/{group_id}/assignments/{assignment_id}/answers/{answer_id}', 'answerDetail')->name('answer-detail');
+        Route::put('/groups/{group_id}/assignments/{assignment_id}/answers/{answer_id}', 'answerUpdate')->name('answer-update');
     });
 });

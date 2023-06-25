@@ -4,21 +4,47 @@ namespace App\Services;
 
 use App\Models\Answer;
 use Arr;
+use Carbon\Carbon;
 
 class AnswerService
 {
 
-    public function answerList($group_id, $assignment_id)
+    public function answerList($assignment_id)
     {
-        $results = Answer::select(['answer.*', 'user_info.fullname as student_name', 'assignment.id as assignments_id'])
-            ->join('assignment', 'assignment.id', 'answer.assignment_id')
-            ->join('group', 'group.id', 'assignment.group_id')
-            ->join('users', 'users.id', 'group.user_id')
+        $results = Answer::select(['answer.*', 'user_info.fullname as student_name'])
+            ->join('assignment', 'assignment.question_id', 'answer.assignment_id')
+            ->join('users', 'users.id', 'answer.student_id')
             ->join('user_info', 'user_info.user_id', 'users.id')
-            ->where('group.id', $group_id)
-            ->where('assignment.id', $assignment_id)
+            ->where('answer.assignment_id', $assignment_id)
             ->get()
             ->toArray();
         return $results;
     }
+
+    public function answerDetail($answer_id)
+    {
+        $results = Answer::select(['answer.*', 'user_info.fullname as student_name'])
+            ->join('assignment', 'assignment.question_id', 'answer.assignment_id')
+            ->join('users', 'users.id', 'answer.student_id')
+            ->join('user_info', 'user_info.user_id', 'users.id')
+            ->where('answer.id', $answer_id)
+            ->first();
+        return $results ?? [];
+    }
+
+    public function answerUpdate($answer_id, $requests)
+    {
+        $answer_update = [
+            'assignment_id' => Arr::get($requests, 'assignment_id'),
+            'student_id' => Arr::get($requests, 'student_id'),
+            'is_submit' => Arr::get($requests, 'is_submit'),
+            'content' => Arr::get($requests, 'content'),
+            'review' => Arr::get($requests, 'review'),
+            'timeline' => Arr::get($requests, 'timeline'),
+            'submit_at' => Carbon::now(),
+        ];
+        return Answer::where('answer.id', $answer_id)->update($answer_update);
+    }
+
+    
 }

@@ -30,6 +30,19 @@ class GroupController extends Controller
         return response()->json(['data' => $classes]);
     }
 
+    public function listStudentInGroup(Request $request, $id)
+    {
+        $params = $request->all();
+        $classes = $this->service->listStudentInGroup($params, $id);
+        return response()->json(['data' => $classes]);
+    }
+
+    public function listScoreStudentInGroup($id)
+    {
+        $results = $this->service->listScoreStudentInGroup($id);
+        return response()->json(['data' => $results]);
+    }
+
     /**
      * Display the specified resource.
      *
