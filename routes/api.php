@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClassController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -56,5 +57,9 @@ Route::middleware('auth:sanctum')->group(function() {
         Route::get('/groups/{group_id}/assignments/{assignment_id}/answers', 'answerList')->name('answer-list');
         Route::get('/groups/{group_id}/assignments/{assignment_id}/answers/{answer_id}', 'answerDetail')->name('answer-detail');
         Route::put('/groups/{group_id}/assignments/{assignment_id}/answers/{answer_id}', 'answerUpdate')->name('answer-update');
+    });
+
+    Route::controller(StudentController::class)->prefix('students')->group(function() {
+        Route::get('/groups/{group_id}/assignments/{assignment_id}/answers', 'answerDetail')->name('student-answer-detail');
     });
 });
