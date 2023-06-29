@@ -42,7 +42,7 @@ class QuestionController extends Controller
     public function questionList(Request $request)
     {
         $params = $request->all();
-        $question_list = $this->service->QuestionList($params, $request->user()->id);
+        $question_list = $this->service->questionList($params, $request->user()->id);
         return response()->json([
             'data' => $question_list
         ], 200);
@@ -50,9 +50,22 @@ class QuestionController extends Controller
 
     public function show(Request $request, $id)
     {
-        $question_list = $this->service->QuestionDetail($id, $request->user()->id);
+        $question_list = $this->service->questionDetail($id, $request->user()->id);
         return response()->json([
             'data' => $question_list
+        ], 200);
+    }
+
+    function updateQuestion(Request $request, $id) {
+        $params = $request->all();
+        $results = $this->service->updateQuestion($params, $id);
+        if (!$results) {
+            return response()->json([
+                'message' => 'something went wrong'
+            ], 500);
+        }
+        return response()->json([
+            'message' => 'Successfully'
         ], 200);
     }
 }

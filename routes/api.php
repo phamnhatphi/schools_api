@@ -43,14 +43,13 @@ Route::middleware('auth:sanctum')->group(function() {
         Route::post('/groups/{id}/assignments', 'storeAssignmentGroupId')->name('group-assignment-store');
         Route::put('/groups/{id}/assignments/{assignment_id}', 'updateAssignmentGroupId')->name('group-assignment-update');
         Route::delete('/groups/{id}/assignments/{assignment_id}', 'deleteAssignmentGroupId')->name('group-assignment-delete');
-        Route::delete('/groups/{id}/assignments/{assignment_id}', 'deleteAssignmentGroupId')->name('group-assignment-delete');
     });
     Route::controller(QuestionController::class)->prefix('teachers')->group(function() {
         Route::post('/questions', 'store')->name('questions-store');
         Route::get('/library', 'libraryList')->name('library-list');
         Route::get('/my-questions', 'questionList')->name('my-questions-list');
         Route::get('/questions/{id}', 'show')->name('my-questions-show');
-        Route::get('/questions/{id}', 'show')->name('my-questions-show');
+        Route::put('/questions/{id}', 'updateQuestion')->name('update-questions');
         
     });
     Route::controller(AnswerController::class)->prefix('teachers')->group(function() {
@@ -61,5 +60,6 @@ Route::middleware('auth:sanctum')->group(function() {
 
     Route::controller(StudentController::class)->prefix('students')->group(function() {
         Route::get('/groups/{group_id}/assignments/{assignment_id}/answers', 'answerDetail')->name('student-answer-detail');
+        Route::get('/groups', 'listGroupOfStudent')->name('student-group-list');
     });
 });

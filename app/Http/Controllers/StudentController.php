@@ -22,4 +22,12 @@ class StudentController extends Controller
             'data' => $results
         ], 200);
     }
+
+    public function listGroupOfStudent(Request $request)
+    {
+        $results = $this->service->listGroupOfStudent($request->user()->id);
+        return response()->json([
+            'data' => $results
+        ], 200);
+    }
 }

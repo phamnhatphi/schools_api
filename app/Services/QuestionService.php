@@ -45,7 +45,7 @@ class QuestionService
 			->toArray();
 	}
 
-	public function QuestionList($params, $user_id)
+	public function questionList($params, $user_id)
 	{
 		$limit = Arr::get($params, 'limit', config('pagination.limit'));
         $sort = Arr::get($params, 'sort', config('pagination.sort'));
@@ -67,15 +67,29 @@ class QuestionService
 			->toArray();
 	}
 
-	public function QuestionDetail($id, $user_id)
+	public function questionDetail($id, $user_id)
 	{
-		$result = Question::select(['question.*', 'subject.name as subject_name', 'user_info.fullname as teacher_name'])
+		$results = Question::select(['question.*', 'subject.name as subject_name', 'user_info.fullname as teacher_name'])
 			->join('subject', 'subject.id', 'question.subject_id')
 			->join('users', 'users.id', 'question.user_id')
 			->join('user_info', 'user_info.user_id', 'users.id')
 			->where('users.id', $user_id)
 			->where('question.id', $id)
 			->first();
-		return $result ?? [];
+		return $results ?? [];
+	}
+
+	function updateQuestion($params, $id)
+	{
+		$update = [
+			'answer' => Arr::get($params, 'answer'),
+			'content' => Arr::get($params, 'content'),
+			'description' => Arr::get($params, 'description'),
+			'has_answer' => Arr::get($params, 'has_answer', 0),
+			'is_public' => Arr::get($params, 'is_public', 0),
+			'timeline' => Arr::get($params, 'timeline'),
+			'subject_id' => Arr::get($params, 'subject_id'),
+		];
+		return Question::where('id', $id)->update($update);
 	}
 }
